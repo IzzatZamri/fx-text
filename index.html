@@ -1,0 +1,57 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiseAi Test Case</title>
+    <link rel="stylesheet" href="css/wailib-min-1.10.3.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/webrtc-adapter.js"></script>
+    <script src="js/face-api.min.js"></script>
+    <script src="js/wailib-util-min.js" ></script>
+    <script src="js/wailib-sdk-1.10.3.js"></script>
+  </head>
+  <body>
+    Insert Token Here
+    <input type="text" id="myInput" style="min-width: 300px;">
+    <button onclick="initiateSDK()">Initiate SDK</button>
+
+    <div id="myDiv" class="myDiv"></div>
+
+    <script lang="js">
+      function initiateSDK () {
+      var key = document.getElementById('myInput').value;
+      console.log('token input', key)
+
+      //SDK using default config
+      let wiseai = new WAILib.SDK(
+          key,
+          'https://wiseconsole-demo.wiseai.tech/', 
+          "myDiv", {
+          showActionButtons:true,
+          faceType: 'video',
+          docType: 'mykad',
+          cameraFit: true,
+          enableIDFraudDetection:true
+          },
+          null,
+          'red'
+      );
+      
+      wiseai.startCamera()
+      wiseai.cameraCapture({
+        onSuccess: function(stage, result) {
+          console.log('success')
+          console.log(stage)
+          console.log(result);
+        },
+      
+        onError:function(stage, error){
+          console.log('error')
+          console.log(stage)
+          console.error(error);
+        }
+      })
+      }
+    </script>
+  </body>
+</html>
